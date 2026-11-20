@@ -1,5 +1,14 @@
 # oenb
 
+[![PyPI status](https://img.shields.io/pypi/v/oenb)](https://pypi.org/project/oenb/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/oenb)](https://pypi.org/project/oenb/)
+[![Total downloads](https://img.shields.io/pepy/dt/oenb)](https://pepy.tech/project/oenb)
+[![tests](https://github.com/franzmohr/oenb-py/actions/workflows/tests.yml/badge.svg)](https://github.com/franzmohr/oenb-py/actions/workflows/tests.yml)
+[![License: GPL (>= 2)](https://img.shields.io/badge/license-GPL%20%28%3E%3D%202%29-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
+
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/franzmohr)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/franzmohr)
+
 Tools to access data from the data web service of the
 [Oesterreichische Nationalbank (OeNB)](https://www.oenb.at/en/Statistics/User-Defined-Tables/webservice.html).
 
