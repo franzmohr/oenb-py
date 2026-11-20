@@ -4,7 +4,7 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/oenb)](https://pypi.org/project/oenb/)
 [![Total downloads](https://img.shields.io/pepy/dt/oenb)](https://pepy.tech/project/oenb)
 [![tests](https://github.com/franzmohr/oenb-py/actions/workflows/tests.yml/badge.svg)](https://github.com/franzmohr/oenb-py/actions/workflows/tests.yml)
-[![License: GPL (>= 2)](https://img.shields.io/badge/license-GPL%20%28%3E%3D%202%29-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit)
 
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/franzmohr)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/franzmohr)
@@ -165,4 +165,8 @@ pytest -m live
 
 ## License
 
-GPL-2.0-or-later, as the R package. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
+
+The R package is GPL (>= 2), which is the convention on CRAN. This port is
+permissive instead, so that it can be used in settings whose dependency
+policies do not allow copyleft.
