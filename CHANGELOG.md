@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-20)
 
 First release. A Python port of the R package
 [oenb](https://github.com/franzmohr/oenb) 0.1.1.
