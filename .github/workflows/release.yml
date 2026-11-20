@@ -1,0 +1,91 @@
+# Builds the distributions and publishes them with PyPI's trusted publishing
+# (OIDC), so that no token is stored in this repository.
+#
+# Before the first release, register a pending publisher at
+# https://pypi.org/manage/account/publishing/ with
+#
+#   PyPI project name: oenb
+#   Owner:             franzmohr
+#   Repository name:   oenb-py
+#   Workflow name:     release.yml
+#   Environment name:  pypi
+#
+# and, to rehearse, the same at https://test.pypi.org/manage/account/publishing/
+# with the environment name 'testpypi'. The pending publisher becomes a regular
+# one with the first upload.
+#
+# Run the workflow by hand ('Run workflow' on the Actions tab) to publish to
+# TestPyPI. Push a tag 'v<version>' to publish to PyPI.
+
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[test]" build twine
+
+      # Nothing is published if the tests fail.
+      - run: pytest -q
+
+      # A tag that does not match the version in pyproject.toml would publish a
+      # version under a name nobody can find again.
+      - name: Check that the tag matches the version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version=$(python -c "import oenb; print(oenb.__version__)")
+          tag=${GITHUB_REF_NAME#v}
+          if [ "$version" != "$tag" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match version $version." >&2
+            exit 1
+          fi
+
+      - run: python -m build
+      - run: twine check --strict dist/*
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+
+  testpypi:
+    # A rehearsal: the same distributions, uploaded to TestPyPI.
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+
+  pypi:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

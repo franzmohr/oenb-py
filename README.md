@@ -163,6 +163,19 @@ service are marked `live` and are deselected by default:
 pytest -m live
 ```
 
+## Releasing
+
+The workflow [release.yml](.github/workflows/release.yml) builds the
+distributions and uploads them with PyPI's trusted publishing, so no token is
+stored in this repository. Its header lists the fields of the pending publisher
+that PyPI needs before the first release.
+
+To release a version: set `__version__` in `src/oenb/__init__.py`, which is
+where the version lives, move the heading of the unreleased section of
+[CHANGELOG.md](CHANGELOG.md), commit, and push the tag `v<version>`. The workflow refuses a tag that does not
+match the version. Running the workflow by hand publishes to TestPyPI instead,
+to rehearse a release.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
